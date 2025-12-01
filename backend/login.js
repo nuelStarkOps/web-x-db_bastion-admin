@@ -5,9 +5,21 @@ const { getDB } = require("./db");
 const { response } = require("./utils");
 
 exports.handler = async (event) => {
-  try {
-    const { username, password } = JSON.parse(event.body);
+  console.log("EVENT RECEIVED:", event);
 
+  let body;
+
+  // Safe JSON parse wrapper
+  try {
+    body = JSON.parse(event.body);
+  } catch (err) {
+    console.error("JSON parse failed:", err);
+    return response(400, { message: "Invalid JSON format" });
+  }
+
+  const { username, password } = body;
+
+  try {
     if (!username || !password) {
       return response(400, { message: "Missing fields" });
     }
@@ -40,7 +52,7 @@ exports.handler = async (event) => {
     return response(200, { token });
 
   } catch (err) {
-    console.log(err);
+    console.error("ERROR:", err);
     return response(500, { message: "Server error" });
   }
 };
