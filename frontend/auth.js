@@ -1,4 +1,5 @@
-const API_URL = "https://your-api-domain.com"; 
+const API_URL = "https://eqybw8xjqg.execute-api.us-east-1.amazonaws.com/prod"; 
+// const API_URL = "https://<your-api-id>.execute-api.<region>.amazonaws.com/prod";
 
 async function login(event) {
   event.preventDefault();
