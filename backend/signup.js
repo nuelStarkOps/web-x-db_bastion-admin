@@ -4,9 +4,21 @@ const { getDB } = require("./db");
 const { response } = require("./utils");
 
 exports.handler = async (event) => {
-  try {
-    const { username, email, password } = JSON.parse(event.body);
+  console.log("EVENT RECEIVED:", event);
 
+  let body;
+
+  // Safe JSON parse wrapper
+  try {
+    body = JSON.parse(event.body);
+  } catch (err) {
+    console.error("JSON parse failed:", err);
+    return response(400, { message: "Invalid JSON format" });
+  }
+
+  const { username, email, password } = body;
+
+  try {
     if (!username || !email || !password) {
       return response(400, { message: "All fields are required" });
     }
@@ -33,7 +45,7 @@ exports.handler = async (event) => {
     return response(200, { message: "Signup successful" });
 
   } catch (err) {
-    console.log(err);
+    console.error("ERROR:", err);
     return response(500, { message: "Server error" });
   }
 };
