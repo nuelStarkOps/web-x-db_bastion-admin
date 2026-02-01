@@ -11,36 +11,7 @@ This project demonstrates a **secure AWS architecture** using a **Bastion Host**
 
 ## 🏗️ Architecture Overview
 
-```mermaid
-flowchart TB
-    subgraph Internet
-        User[👤 User]
-    end
-    
-    subgraph AWS Cloud
-        subgraph Public["Public Subnet"]
-            CF[CloudFront]
-            S3[S3 Bucket<br/>Frontend]
-            Bastion[🖥️ Bastion EC2<br/>Jump Host]
-        end
-        
-        subgraph Private["Private Subnet"]
-            DB[🗄️ DB EC2<br/>MariaDB]
-        end
-        
-        Lambda[⚡ Lambda<br/>Login/Signup]
-        APIGW[🔌 API Gateway]
-        IGW[🌐 Internet Gateway]
-        NAT[📡 NAT Gateway]
-    end
-    
-    User --> CF --> S3
-    User --> APIGW --> Lambda
-    Lambda --> DB
-    User --> IGW --> Bastion
-    Bastion --> DB
-    DB --> NAT --> IGW
-```
+![AWS Architecture Diagram](bastion-demo-screenshots/aws_architecture.png)
 
 ### Key Components
 
